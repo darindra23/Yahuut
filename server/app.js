@@ -4,7 +4,7 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const cors = require("cors");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const routes = require("./routes");
 const { errorHandler } = require("./middlewares/errorHandler");
 

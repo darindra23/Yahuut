@@ -66,12 +66,13 @@ export default {
         };
         let { data } = await axios.post("/user", input);
         localStorage.setItem("player", data.username);
+        localStorage.setItem("id", data.id);
         Toast.fire({
           icon: "success",
           title: "Signed in successfully"
         });
         this.$router.push({
-          path: "/lobby"
+          path: "/rooms"
         });
       } catch (error) {
         Swal.fire({
