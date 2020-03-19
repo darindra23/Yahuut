@@ -4,73 +4,61 @@
     <div class="rooms-container">
       <div class="room-card" v-for="(room,i) in rooms" :key="i">
         <h2>{{room.name}}</h2>
-        <div>total player: {{room.length}}</div>
+        <div>total player: {{room.Users.length}}</div>
         <div>{{room.status}}</div>
         <button @click.prevent="join(room.id, room.name)" v-if="room.status === 'Waiting'">join</button>
       </div>
       <div>
-        <button @click.prevent="add" class="room-card">add new room</button>
+        <button v-b-modal.add class="room-card">add new room</button>
       </div>
     </div>
+    <Add></Add>
     <router-view />
   </div>
 </template>
 
 <script>
-import {axios, errorHandler} from '../config/axios'
+import { axios, errorHandler } from "../config/axios";
+import { mapState } from "vuex";
+import Add from "../components/add";
+import io from "socket.io-client";
+let socket = io("http://localhost:3000");
 
 export default {
   name: "Rooms",
-  data() {
-    return {
-      rooms: null
-    }
+  components: {
+    Add
+  },
+  computed: {
+    ...mapState(["rooms"])
+  },
+  mounted() {
+    this.$store.dispatch("getRooms");
+    socket.on("roomUpdate", rtroom => {
+      this.$store.dispatch("addRoom", rtroom);
+    });
   },
   methods: {
-    getRooms () {
-      axios.get('/room')
-      .then( result => {
-        this.rooms = result.data
-      })
-      .catch( err => {
-        errorHandler(err)
-      })
-    },
-    join (id) {
-      console.log(id,'rooms')
-      const username = localStorage.player
-      console.log(username)
-      console.log(localStorage.id)
-      axios.put(`/room/${localStorage.id}`, {username, RoomId:id })
-      .then( data => {
-        console.log(data)
-        this.$router.push(`/lobby`)
-      })
-      // axios.put('/user/2', {username: 123, RoomId: 2})
-      // .then(data => {
-      //   console.log(data)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-    },
-    add () {
-      axios.post('/room', {name: 'test', status: 'Waiting'})
-      .then( () => {
-        this.getRooms()
-      })
-      .catch(err => errorHandler(err))
+    join(id) {
+      const username = localStorage.player;
+      axios
+        .put(`/room/${localStorage.id}`, { username, RoomId: id })
+        .then(() => {
+          localStorage.setItem("room", id);
+          this.$store.dispatch("getRooms");
+          this.$router.push(`/lobby/${id}`);
+        })
+        .catch(error => {
+          errorHandler(error);
+        });
     }
   },
-  created () {
-    this.getRooms()
-  },
   watch: {
-    roomStatus () {
-      if(!this.room.status) {
-        this.room.status = 'Waiting'
+    roomStatus() {
+      if (!this.room.status) {
+        this.room.status = "Waiting";
       } else {
-        this.room.status = 'Playing'
+        this.room.status = "Playing";
       }
     }
   }
