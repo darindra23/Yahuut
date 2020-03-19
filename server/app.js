@@ -16,8 +16,8 @@ app.use(errorHandler);
 
 io.on("connection", function(socket) {
   console.log("a user connected");
-  socket.on("player", data => {
-    io.emit("player", data);
+  socket.on("room", data => {
+    socket.broadcast.emit("roomUpdate", data);
   });
 });
 

@@ -12,8 +12,8 @@ class Controller {
   }
   static async room(req, res, next) {
     try {
-      const {name} = req.body
-      let room = await Room.create({name, status: 'Waiting', score: 0});
+      const { name } = req.body;
+      let room = await Room.create({ name, status: "Waiting", score: 0 });
       res.status(200).json(room);
     } catch (error) {
       next(error);
@@ -21,9 +21,9 @@ class Controller {
   }
   static async showUser(req, res, next) {
     try {
-      const RoomId = req.params.id
+      const RoomId = req.params.id;
       let condition = {
-        where: {RoomId}
+        where: { RoomId }
       };
       let listUser = await User.findAll(condition);
       res.status(200).json(listUser);
@@ -49,17 +49,16 @@ class Controller {
           id: req.params.id
         }
       };
-      console.log('sini')
       let input = {
         username: req.body.username,
         score: 0,
         RoomId: req.body.RoomId
       };
       let joined = await User.update(input, condition);
-      if(joined[0]){
+      if (joined[0]) {
         res.status(200).json(joined);
       } else {
-        throw createError(404,'Data not found.')
+        throw createError(404, "Data not found.");
       }
     } catch (error) {
       next(error);
