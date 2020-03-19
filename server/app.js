@@ -5,17 +5,19 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const cors = require("cors");
 const PORT = process.env.PORT;
-const player = [];
+const routes = require("./routes");
+const { errorHandler } = require("./middlewares/errorHandler");
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(routes);
+app.use(errorHandler);
 
 io.on("connection", function(socket) {
   console.log("a user connected");
   socket.on("player", data => {
-    player.push({ username: data });
-    io.emit("player", player);
+    io.emit("player", data);
   });
 });
 

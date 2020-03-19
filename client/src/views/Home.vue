@@ -38,29 +38,47 @@
   </div>
 </template>
 <script>
-import io from "socket.io-client";
-let socket = io("http://localhost:3000");
+import { axios } from "../config/axios";
+import Swal from "sweetalert2";
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: toast => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  }
+});
 export default {
   name: "Home",
   data() {
     return {
-      username: "",
-      player: []
+      username: ""
     };
   },
-  created() {
-    socket.on("player", player => {
-      console.log(player, "ini created");
-      this.player = player;
-    });
-  },
   methods: {
-    login() {
-      localStorage.setItem("player", this.username);
-      socket.emit("player", this.username);
-      this.$router.push({
-        path: "/lobby"
-      });
+    async login() {
+      try {
+        let input = {
+          username: this.username
+        };
+        let { data } = await axios.post("/user", input);
+        localStorage.setItem("player", data.username);
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully"
+        });
+        this.$router.push({
+          path: "/lobby"
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Please input username."
+        });
+      }
     }
   }
 };
