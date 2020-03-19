@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Lobby from "../views/Lobby.vue";
+import Rooms from "../views/Rooms.vue";
 
 Vue.use(VueRouter);
 
@@ -12,9 +13,14 @@ const routes = [
     component: Home
   },
   {
-    path: "/lobby",
+    path: "/lobby/:name",
     name: "Lobby",
     component: Lobby
+  },
+  {
+    path: "/rooms",
+    name: "Rooms",
+    component: Rooms
   }
 ];
 
