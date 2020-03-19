@@ -5,11 +5,11 @@
     </div>
     <button>start now!</button>
     <div>
-        <p>{{players.length}} has joined</p>
+      <p>{{players.length}} has joined</p>
     </div>
     <div class="list-player">
       <div class="player" v-for="(player,i) in players" :key="i">
-        {{player.name}}
+        {{player.username}}
       </div>
     </div>
   </div>
@@ -21,23 +21,19 @@ export default {
     name: 'Room',
     data () {
         return {
-          players: [{
-            name:'set',
-            score: 0
-          },
-          {
-            name:'crocket',
-            score: 0
-          }]
+          players: []
         }
     },
     methods: {
         getPlayer () {
-          let {id} = localStorage
+          let id = localStorage.id
           axios.get(`/user/${id}`)
           .then( ({data}) => {
             this.players = data
           })
+        },
+        start () {
+          axios.put(`/user/${localStorage.id}`)
         }
     },
     created () {

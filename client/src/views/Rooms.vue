@@ -36,7 +36,7 @@ export default {
         errorHandler(err)
       })
     },
-    join (id,name) {
+    join (id) {
       console.log(id,'rooms')
       const username = localStorage.player
       console.log(username)
@@ -44,7 +44,7 @@ export default {
       axios.put(`/room/${localStorage.id}`, {username, RoomId:id })
       .then( data => {
         console.log(data)
-        this.$router.push(`/lobby/${name}`)
+        this.$router.push(`/lobby`)
       })
       // axios.put('/user/2', {username: 123, RoomId: 2})
       // .then(data => {
