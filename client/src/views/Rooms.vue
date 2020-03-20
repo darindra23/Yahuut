@@ -26,7 +26,8 @@ import { axios, errorHandler } from "../config/axios";
 import { mapState } from "vuex";
 import Add from "../components/add";
 import io from "socket.io-client";
-let socket = io("http://localhost:3000");
+let socket = io("https://yahoot-coy.herokuapp.com/");
+// let socket = io("http://localhost:3000/");
 
 export default {
   name: "Rooms",
@@ -63,6 +64,9 @@ export default {
 </script>
 
 <style>
+.room-list {
+  padding-top: 10vh  
+}
 .room-card {
   background-color: white;
   height: 40vh;

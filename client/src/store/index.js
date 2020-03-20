@@ -2,14 +2,16 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { axios, errorHandler } from "../config/axios";
 import io from "socket.io-client";
-let socket = io("http://localhost:3000");
+let socket = io("https://yahoot-coy.herokuapp.com/");
+// let socket = io("http://localhost:3000/");
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     players: [],
-    rooms: []
+    rooms: [],
+    roomdId: 0
   },
   mutations: {
     PLAYERS(state, payload) {
@@ -17,6 +19,9 @@ export default new Vuex.Store({
     },
     ROOMS(state, payload) {
       state.rooms = payload;
+    },
+    ROOMID(state, payload) {
+      state.roomdId = payload;
     }
   },
   actions: {
