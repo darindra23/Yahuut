@@ -5,8 +5,8 @@
         <i
           class="far fa-question-circle"
           style="font-size: 10rem; color: #8a4eb9; -webkit-box-shadow: 0px 5px 18px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 5px 18px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 5px 18px 1px rgba(0,0,0,0.75); border-radius: 100px"
+   -moz-box-shadow: 0px 5px 18px 1px rgba(0,0,0,0.75);
+   box-shadow: 0px 5px 18px 1px rgba(0,0,0,0.75); border-radius: 100px"
         ></i>
       </div>
       <div class="container sd text-center col-2" style="font-size : 5rem">{{ this.time }}</div>
@@ -15,67 +15,66 @@
     <div class="container mt-4">
       <div class="d-flex justify-content-between">
         <div class="container col-6 option awnser-a" style="font-size: 30px; margin-top:-20px">
-          A
           <button
             @click.prevent="jawabanA"
             type="button"
-            class="btn btn-primary jwb"
+            class="btn btn-primary jwb ml-2"
           >{{this.answer[0]}}</button>
         </div>
         <div class="container col-6 option awnser-b" style="font-size: 30px; margin-top:-20px">
-          C
           <button
             @click.prevent="jawabanC"
             type="button"
-            class="btn btn-success jwb"
+            class="btn btn-success jwb ml-2"
           >{{this.answer[2]}}</button>
         </div>
       </div>
       <div class="d-flex justify-content-between mt-4">
         <div class="container col-6 option awnser-a" style="font-size: 30px; margin-top:-20px;">
-          B
           <button
             @click.prevent="jawabanB"
             type="button"
-            class="btn btn-info jwb"
+            class="btn btn-warning jwb ml-2"
           >{{this.answer[1]}}</button>
         </div>
         <div class="container col-6 option awnser-b" style="font-size: 30px;margin-top:-20px;">
-          D
           <button
             @click.prevent="jawabanD"
             type="button"
-            class="btn btn-danger jwb"
+            class="btn btn-danger jwb ml-2"
           >{{this.answer[3]}}</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+ 
 
 <script>
+import bgm from "../music/bgm-shinchan.mp3";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { errorHandler } from "../config/axios";
-var count = 7;
+var count = 5;
 export default {
   name: "Home",
   data() {
     return {
+      bgm: new Audio(bgm),
       question: null,
       answer: [],
       correct_answer: null,
       category: null,
       time: "__",
       timer: null,
-      champ: ["malik", "gusti", "adam"]
+      score: 0
     };
   },
   components: {},
   created() {
     setTimeout(() => {
       this.getquestion();
-    }, 2000);
+    }, 1000);
   },
   methods: {
     getquestion() {
@@ -85,7 +84,6 @@ export default {
             "https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple",
           method: "GET"
         })
-          // this.countDown()
           .then(data => {
             const temp = [];
             const regex = /&#039;|&quot;/gi;
@@ -116,22 +114,44 @@ export default {
           });
         count--;
       } else {
-        let input = this.champ.join(", ");
         Swal.fire({
-          html: `<div style="font-size: 3em;">${input}<div>`,
+          html: `
+         <div class="container text-center"><h1>Game Over</h1><
+          <table class="container text-center table table-bordered mt-2" style="width: 100%;">
+   <thead class="bg-primary">
+     <tr>
+       <th scope="col" style="width: 5%;">Name</th>
+       <th scope="col" style="width: 5%;">Score</th>
+     </tr>
+     </thead>
+      <tr>
+       <td>${localStorage.player}</td>
+       <td>${this.score}</td>
+     </tr>
+     </table>`,
           width: 800,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
           padding: "10em",
           background: "#fff url(/images/trees.png)",
           backdrop: `
-        rgba(0,0,123,0.4)
-        url("/images/nyan-cat.gif")
-        left top
-        no-repeat
-          `,
-          onClose() {
-            this.$router.push({
-              path: "/rooms"
-            });
+       rgba(0,0,123,0.4)
+       url("/images/nyan-cat.gif")
+       left top
+       no-repeat
+         `,
+          onClose: () => {
+            axios
+              .delete(
+                `https://yahoot-coy.herokuapp.com/room/${this.$route.params.id}`
+              )
+              .then(() => {
+                this.bgm.pause();
+                this.$router.push({
+                  path: "/rooms"
+                });
+              });
           }
         });
       }
@@ -139,6 +159,7 @@ export default {
     jawabanA() {
       clearInterval(this.timer);
       if (this.answer[0] === this.correct_answer) {
+        this.score += 100;
         Swal.fire({
           position: "center",
           icon: "success",
@@ -152,11 +173,12 @@ export default {
           this.getquestion();
         }, 4000);
       } else {
+        clearInterval(this.timer);
         Swal.fire({
           position: "center",
           icon: "error",
-          title: `Ups, wrong answer!! The answer is 
-        🙈 ${this.correct_answer} 🙈`,
+          title: `Ups, wrong answer!! The answer is
+       🙈 ${this.correct_answer} 🙈`,
           showConfirmButton: false,
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -170,6 +192,7 @@ export default {
     jawabanB() {
       clearInterval(this.timer);
       if (this.answer[1] === this.correct_answer) {
+        this.score += 100;
         Swal.fire({
           position: "center",
           icon: "success",
@@ -183,11 +206,12 @@ export default {
           this.getquestion();
         }, 4000);
       } else {
+        clearInterval(this.timer);
         Swal.fire({
           position: "center",
           icon: "error",
-          title: `Ups, wrong answer!! The answer is 
-        🙈 ${this.correct_answer} 🙈`,
+          title: `Ups, wrong answer!! The answer is
+       🙈 ${this.correct_answer} 🙈`,
           showConfirmButton: false,
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -201,6 +225,7 @@ export default {
     jawabanC() {
       clearInterval(this.timer);
       if (this.answer[2] === this.correct_answer) {
+        this.score += 100;
         Swal.fire({
           position: "center",
           icon: "success",
@@ -214,11 +239,12 @@ export default {
           this.getquestion();
         }, 4000);
       } else {
+        clearInterval(this.timer);
         Swal.fire({
           position: "center",
           icon: "error",
-          title: `Ups, wrong answer!! The answer is 
-        🙈 ${this.correct_answer} 🙈`,
+          title: `Ups, wrong answer!! The answer is
+       🙈 ${this.correct_answer} 🙈`,
           showConfirmButton: false,
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -232,6 +258,7 @@ export default {
     jawabanD() {
       clearInterval(this.timer);
       if (this.answer[3] === this.correct_answer) {
+        this.score += 100;
         Swal.fire({
           position: "center",
           icon: "success",
@@ -245,11 +272,12 @@ export default {
           this.getquestion();
         }, 4000);
       } else {
+        clearInterval(this.timer);
         Swal.fire({
           position: "center",
           icon: "error",
-          title: `Ups, wrong answer!! The answer is 
-        🙈 ${this.correct_answer} 🙈`,
+          title: `Ups, wrong answer!! The answer is
+       🙈 ${this.correct_answer} 🙈`,
           showConfirmButton: false,
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -270,8 +298,8 @@ export default {
           Swal.fire({
             position: "center",
             icon: "error",
-            title: ` Ups, Time is Up !!! The answer is 
-          🙈 ${this.correct_answer} 🙈`,
+            title: ` Ups, Time is Up !!! The answer is
+         🙈 ${this.correct_answer} 🙈`,
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -286,6 +314,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .question {
   color: white;
@@ -313,7 +342,7 @@ export default {
 }
 .jwb {
   font-size: 20px;
-  height: 3em;
+  height: 3raem;
   width: 25em;
   border-radius: 40px;
   -webkit-box-shadow: inset 0px 0px 12px 2px rgba(0, 0, 0, 0.51);

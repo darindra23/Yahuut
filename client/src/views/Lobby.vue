@@ -22,6 +22,8 @@
 import { mapState } from "vuex";
 import io from "socket.io-client";
 import Questions from "../components/Questions";
+import { axios, errorHandler } from "../config/axios";
+import bgm from '../music/bgm-shinchan.mp3'
 let socket = io("https://yahoot-coy.herokuapp.com/");
 // let socket = io("http://localhost:3000/");
 export default {
@@ -31,16 +33,25 @@ export default {
   },
   data() {
     return {
-      roomStatus: false
+      roomStatus: false,
+      bgm: new Audio(bgm)
     };
   },
   computed: {
     ...mapState(["players"])
   },
   methods: {
-    start() {
-      this.roomStatus = true;
-      socket.emit("start");
+    async start() {
+      try {
+        socket.emit("start", this.players);
+        let { data } = await axios.put(`/start/${this.$route.params.id}`);
+        if (data) {
+          this.roomStatus = true;
+          this.bgm.play()
+        }
+      } catch (error) {
+        errorHandler(error);
+      }
     }
   },
   created() {
@@ -65,6 +76,7 @@ export default {
   justify-content: center space-evenly;
   align-items: center;
   min-height: 100vh;
+  margin-top: 10vh;
 }
 .start-btn {
   border: 5px black solid;

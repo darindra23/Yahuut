@@ -64,6 +64,9 @@ export default {
 </script>
 
 <style>
+.room-list {
+  padding-top: 10vh  
+}
 .room-card {
   background-color: white;
   height: 40vh;
