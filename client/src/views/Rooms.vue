@@ -1,16 +1,20 @@
 <template>
   <div class="room-list">
-    <div class="logo">ini logo</div>
+    <div class="logo">
+      <h1>Yahoot!</h1>
+    </div>
     <div class="rooms-container">
       <div class="room-card" v-for="(room,i) in rooms" :key="i">
+        <div class="room-card-front">
         <h2>{{room.name}}</h2>
         <div>total player: {{room.Users.length}}</div>
         <div>{{room.status}}</div>
-        <button class="join-btn" @click.prevent="join(room.id, room.name)" v-if="room.status === 'Waiting'">join</button>
       </div>
-      <div>
-        <button v-b-modal.add class="room-card">add new room</button>
+      <div class="room-card-back">
+       <button class="join-btn" @click.prevent="join(room.id, room.name)" v-if="room.status === 'Waiting'">join</button>
       </div>
+    </div>
+      <button v-b-modal.add class="room-card">add new room</button>
     </div>
     <Add></Add>
     <router-view />
@@ -60,29 +64,37 @@ export default {
 
 <style>
 .room-card {
+  background-color: white;
   height: 40vh;
   width: 30vw;
   display: flex;
   flex-flow: column wrap;
   justify-content: space-evenly;
   align-items: center;
-  border: 2px solid black;
+  box-shadow: 0px 4px 12px rgba(105, 6, 38, 0.25);
+  padding: 16px;
+  transition: 320ms ease;
   border-radius: 30px;
   margin-top: 3vh;
   margin-bottom: 3vh;
 }
-.join-btn {
+.room-card h2 {
+  margin-top: 0px;
+}
+.room-card button {
   border: 1px black solid;
   border-radius: 7px;
   padding: 1vh;
   width: 10vh;
 }
-.join-btn:hover {
-  border: 1px black solid;
-  border-radius: 7px;
-  background-color: yellow ;
-  padding: 1vh;
-  width: 10vh;
+.room-card button:hover {
+  background-color: #9300f5;
+  color: white;
+  transform: scale(1.18)
+}
+.room-card:hover > a {
+  opacity:1;
+  transform: translateX(0px);
 }
 .rooms-container {
   display: flex;

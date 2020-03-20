@@ -4,16 +4,15 @@
       <div class="container p-10 align-content-center" style="background-color:#9300f5;">
         <div class="container p-10 align-content-center" style="background-color:#9300f5;">
           <div class="container p-10 align-content-center" style="background-color:#9300f5;">
-            <img
-              src="../image/logo.png"
-              style="margin-left:415px; margin-bottom:-295px; margin-top:200px"
-              width="250px"
-              alt
-            />
             <b-card
               style="max-width: 17rem; margin-top:26%; background-color:#9300f5; border:0px"
               class="mx-auto"
             >
+            <div class="logo">
+              <h6> it's</h6>
+              <h1>Yahoot!</h1>
+              <h6>not Kahoot!</h6>
+            </div>
               <b-form-input
                 v-model="username"
                 placeholder="Username"
@@ -84,3 +83,12 @@ export default {
   }
 };
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap');
+
+h1 {
+font-family: 'Black Han Sans', sans-serif;
+color: white;
+font-weight: 80px;
+}
+</style>

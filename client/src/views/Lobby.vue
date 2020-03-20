@@ -1,6 +1,8 @@
 <template>
   <div class="room">
-    <div>ini logo</div>
+    <div class="logo">
+      <h1>Yahoot!</h1>
+    </div>
     <button class="start-btn">start now!</button>
     <div>
       <p>{{players.length}} has joined</p>
@@ -42,17 +44,32 @@ export default {
   min-height: 100vh;
 }
 .start-btn {
-  border: 1px black solid;
+  border: 5px black solid;
+  background-color: whitesmoke;
+  border-radius: 100px;
+  padding: 1vh;
+}
+.start-btn:hover {
+  color: #9300f5;
+  transform: scale(1.18)
 }
 .list-player {
   display: flex;
   flex-flow: row wrap;
-  justify-content: center space-evenly;
+  justify-content: space-evenly;
   align-items: center;
   width: 80vw;
   padding: 3vh;
 }
 .player {
-  border:1px black solid
+  display: flex;
+  width: 20vw;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 4px black solid;
+  border-radius: 10px;
+  margin: 1vh;
 }
 </style>
