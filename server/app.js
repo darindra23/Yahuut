@@ -25,7 +25,7 @@ io.on("connection", function(socket) {
   socket.on("player", data => {
     socket.to(data[0].RoomId).broadcast.emit("playerUpdate", data);
   });
-  socket.on("start", () => {
+  socket.on("start", data => {
     socket.to(data[0].RoomId).broadcast.emit("startGame");
   });
 });
