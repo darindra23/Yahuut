@@ -1,14 +1,19 @@
 <template>
   <div class="room">
-    <div class="logo">
-      <h1>Yahoot!</h1>
+    <div v-if="!roomStatus">
+      <div class="logo">
+        <h1>Yahoot!</h1>
+      </div>
+      <button class="start-btn" @click.prevent="start">start now!</button>
+      <div>
+        <p>{{players.length}} has joined</p>
+      </div>
+      <div class="list-player">
+        <div class="player" v-for="(player,i) in players" :key="i">{{player.username}}</div>
+      </div>
     </div>
-    <button class="start-btn">start now!</button>
-    <div>
-      <p>{{players.length}} has joined</p>
-    </div>
-    <div class="list-player">
-      <div class="player" v-for="(player,i) in players" :key="i">{{player.username}}</div>
+    <div v-else>
+      <Questions></Questions>
     </div>
   </div>
 </template>
@@ -16,26 +21,40 @@
 <script>
 import { mapState } from "vuex";
 import io from "socket.io-client";
+import Questions from "../components/Questions";
 let socket = io("https://yahoot-coy.herokuapp.com/");
 // let socket = io("http://localhost:3000/");
 export default {
   name: "Room",
+  components: {
+    Questions
+  },
   data() {
-    return {};
+    return {
+      roomStatus: false
+    };
   },
   computed: {
     ...mapState(["players"])
   },
-  methods: {},
+  methods: {
+    start() {
+      this.roomStatus = true;
+      socket.emit("start");
+    }
+  },
   created() {
     this.$store.dispatch("getPlayer", localStorage.room);
     socket.on("playerUpdate", rtplayer => {
       this.$store.dispatch("addPlayer", rtplayer);
     });
+    socket.on("startGame", () => {
+      this.roomStatus = true;
+    });
   },
   mounted() {
-    socket.emit("join",this.$route.params.id);
-  },
+    socket.emit("join", this.$route.params.id);
+  }
 };
 </script>
 
@@ -55,7 +74,7 @@ export default {
 }
 .start-btn:hover {
   color: #9300f5;
-  transform: scale(1.18)
+  transform: scale(1.18);
 }
 .list-player {
   display: flex;
