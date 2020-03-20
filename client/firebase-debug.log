@@ -1,0 +1,53 @@
+[debug] [2020-03-20T02:43:04.897Z] ----------------------------------------------------------------------
+[debug] [2020-03-20T02:43:04.898Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2020-03-20T02:43:04.899Z] CLI Version:   7.15.0
+[debug] [2020-03-20T02:43:04.899Z] Platform:      darwin
+[debug] [2020-03-20T02:43:04.899Z] Node Version:  v13.10.1
+[debug] [2020-03-20T02:43:04.899Z] Time:          Fri Mar 20 2020 09:43:04 GMT+0700 (Western Indonesia Time)
+[debug] [2020-03-20T02:43:04.900Z] ----------------------------------------------------------------------
+[debug] [2020-03-20T02:43:04.900Z] 
+[debug] [2020-03-20T02:43:04.910Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-20T02:43:04.910Z] > authorizing via signed-in user
+[debug] [2020-03-20T02:43:04.910Z] [iam] checking project yahut-coy for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-03-20T02:43:04.912Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-03-20T02:43:04.912Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-03-20T02:43:05.121Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-20T02:43:05.135Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/yahut-coy:testIamPermissions  
+
+[debug] [2020-03-20T02:43:06.628Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-20T02:43:06.630Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/yahut-coy  
+ 
+[debug] [2020-03-20T02:43:07.268Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'yahut-coy'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-03-20T02:43:07.271Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/yahut-coy/versions  
+
+[debug] [2020-03-20T02:43:09.132Z] <<< HTTP RESPONSE 200
+[info] i  hosting[yahut-coy]: beginning deploy...
+[info] i  hosting[yahut-coy]: found 9 files in dist
+[debug] [2020-03-20T02:43:09.562Z] [hosting] hash cache [ZGlzdA] stored for 9 files
+[debug] [2020-03-20T02:43:09.562Z] [hosting][hash queue][FINAL]
+[debug] [2020-03-20T02:43:09.562Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/yahut-coy/versions/9294756bbd32327f:populateFiles  
+ <request body omitted>
+[debug] [2020-03-20T02:44:10.117Z] [populateQueue] Retrying task index 0
+[debug] [2020-03-20T02:44:10.118Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/yahut-coy/versions/9294756bbd32327f:populateFiles  
+ <request body omitted>
+[debug] [2020-03-20T02:45:10.932Z] [populateQueue] Retrying task index 0
+[debug] [2020-03-20T02:45:10.933Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/yahut-coy/versions/9294756bbd32327f:populateFiles  
+ <request body omitted>
+[debug] [2020-03-20T02:45:57.593Z] ----------------------------------------------------------------------
+[debug] [2020-03-20T02:45:57.594Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2020-03-20T02:45:57.594Z] CLI Version:   7.15.0
+[debug] [2020-03-20T02:45:57.594Z] Platform:      darwin
+[debug] [2020-03-20T02:45:57.594Z] Node Version:  v13.10.1
+[debug] [2020-03-20T02:45:57.595Z] Time:          Fri Mar 20 2020 09:45:57 GMT+0700 (Western Indonesia Time)
+[debug] [2020-03-20T02:45:57.595Z] ----------------------------------------------------------------------
+[debug] [2020-03-20T02:45:57.595Z] 
+[debug] [2020-03-20T02:45:57.601Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-20T02:45:57.601Z] > authorizing via signed-in user
+[debug] [2020-03-20T02:45:57.601Z] [iam] checking project yahut-coy for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-03-20T02:45:57.603Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/yahut-coy:testIamPermissions  
+
