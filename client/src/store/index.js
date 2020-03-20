@@ -2,8 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { axios, errorHandler } from "../config/axios";
 import io from "socket.io-client";
-// let socket = io("https://yahoot-coy.herokuapp.com/");
-let socket = io("http://localhost:3000/");
+let socket = io("https://yahoot-coy.herokuapp.com/");
+// let socket = io("http://localhost:3000/");
 
 Vue.use(Vuex);
 
