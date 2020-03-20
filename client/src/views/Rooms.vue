@@ -6,7 +6,7 @@
         <h2>{{room.name}}</h2>
         <div>total player: {{room.Users.length}}</div>
         <div>{{room.status}}</div>
-        <button @click.prevent="join(room.id, room.name)" v-if="room.status === 'Waiting'">join</button>
+        <button class="join-btn" @click.prevent="join(room.id, room.name)" v-if="room.status === 'Waiting'">join</button>
       </div>
       <div>
         <button v-b-modal.add class="room-card">add new room</button>
@@ -54,29 +54,35 @@ export default {
     }
   },
   watch: {
-    roomStatus() {
-      if (!this.room.status) {
-        this.room.status = "Waiting";
-      } else {
-        this.room.status = "Playing";
-      }
-    }
   }
 };
 </script>
 
 <style>
 .room-card {
-  height: 20vh;
+  height: 40vh;
   width: 30vw;
   display: flex;
   flex-flow: column wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   border: 2px solid black;
   border-radius: 30px;
   margin-top: 3vh;
   margin-bottom: 3vh;
+}
+.join-btn {
+  border: 1px black solid;
+  border-radius: 7px;
+  padding: 1vh;
+  width: 10vh;
+}
+.join-btn:hover {
+  border: 1px black solid;
+  border-radius: 7px;
+  background-color: yellow ;
+  padding: 1vh;
+  width: 10vh;
 }
 .rooms-container {
   display: flex;

@@ -1,7 +1,7 @@
 <template>
   <div class="room">
     <div>ini logo</div>
-    <button>start now!</button>
+    <button class="start-btn">start now!</button>
     <div>
       <p>{{players.length}} has joined</p>
     </div>
@@ -34,4 +34,25 @@ export default {
 </script>
 
 <style>
+.room {
+  display: flex;
+  flex-flow: column;
+  justify-content: center space-evenly;
+  align-items: center;
+  min-height: 100vh;
+}
+.start-btn {
+  border: 1px black solid;
+}
+.list-player {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center space-evenly;
+  align-items: center;
+  width: 80vw;
+  padding: 3vh;
+}
+.player {
+  border:1px black solid
+}
 </style>
