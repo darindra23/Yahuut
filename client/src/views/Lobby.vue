@@ -13,6 +13,8 @@
 
 <script>
 import { mapState } from "vuex";
+import io from "socket.io-client";
+let socket = io("http://localhost:3000");
 export default {
   name: "Room",
   data() {
@@ -24,6 +26,9 @@ export default {
   methods: {},
   created() {
     this.$store.dispatch("getPlayer", localStorage.room);
+    socket.on("playerUpdate", rtplayer => {
+      this.$store.dispatch("addPlayer", rtplayer);
+    });
   }
 };
 </script>

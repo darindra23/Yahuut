@@ -34,12 +34,16 @@ export default new Vuex.Store({
         let { data } = await axios.get("/room");
         let player = data.filter(i => i.id === Number(id));
         this.commit("PLAYERS", player[0].Users);
+        socket.emit("player", this.state.players);
       } catch (error) {
         errorHandler(error);
       }
     },
     addRoom(context, data) {
       this.commit("ROOMS", data);
+    },
+    addPlayer(context, data) {
+      this.commit("PLAYERS", data);
     }
   },
   modules: {}

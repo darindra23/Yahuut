@@ -19,6 +19,9 @@ io.on("connection", function(socket) {
   socket.on("room", data => {
     socket.broadcast.emit("roomUpdate", data);
   });
+  socket.on("player", data => {
+    socket.broadcast.emit("playerUpdate", data);
+  });
 });
 
 http.listen(PORT, function() {
