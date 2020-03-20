@@ -24,7 +24,7 @@ io.on("connection", function(socket) {
     socket.join(Number(data));
   });
   socket.on("player", data => {
-    console.log(data,'ini player');
+    console.log(data[0].RoomId,'ini player');
     socket.to(data[0].RoomId).broadcast.emit("playerUpdate", data);
   });
 });
