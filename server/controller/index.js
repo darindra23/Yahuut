@@ -93,6 +93,22 @@ class Controller {
       next(error);
     }
   }
+  static async status(req, res, next) {
+    try {
+      let condition = {
+        where: {
+          id: req.params.id
+        }
+      };
+      let input = {
+        status: "Playing"
+      };
+      let data = await Room.update(input, condition);
+      res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;
