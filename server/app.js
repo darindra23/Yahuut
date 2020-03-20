@@ -19,8 +19,11 @@ io.on("connection", function(socket) {
   socket.on("room", data => {
     socket.broadcast.emit("roomUpdate", data);
   });
+  socket.on("join", data => {
+    socket.join(data);
+  });
   socket.on("player", data => {
-    socket.broadcast.emit("playerUpdate", data);
+    socket.to(data[0].RoomId).broadcast.emit("playerUpdate", data);
   });
 });
 
